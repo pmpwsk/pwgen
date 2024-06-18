@@ -1,7 +1,7 @@
 ## pwgen
 Cross-platform program written in C# that generates passwords from the terminal.
 
-[Repository on GitHub](https://github.com/pmpwsk/pwgen)
+Website: https://uwap.org/projects/pwgen
 
 # Main features
 - Generating passwords
