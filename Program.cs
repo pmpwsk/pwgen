@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -135,7 +135,7 @@ void GenerateAndOutput(uint length, string sets)
                     'a' => "abcdefghijklmnopqrstuvwxyz",
                     'A' => "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
                     '1' => "0123456789",
-                    '.' => "^!$%/()=?+#-.,;:~*@[]{}_°§&",
+                    '.' => "!%()=?+#-.:*@_&",
                     _ => ""
                 }));
                 break;
