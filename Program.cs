@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -120,17 +120,24 @@ void GenerateAndOutput(uint length, string sets)
     if (verbose)
         Console.WriteLine("Generating...");
     StringBuilder builder = new();
-    for (int i = 0; i < length; i++)
-        switch (sets)
-        {
-            case "+":
+    switch (sets)
+    {
+        case "+":
+            for (uint i = length; i > 0; i--)
                 builder.Append(Encoding.ASCII.GetString([(byte)(32 + RandomNumberGenerator.GetInt32(95))]));
-                break;
-            case "?":
+            break;
+        case "?":
+            for (uint i = length; i > 0; i--)
                 builder.Append((char)RandomNumberGenerator.GetInt32(char.MinValue, char.MaxValue + 1));
-                break;
-            default:
-                builder.Append(RandomChar(sets[RandomNumberGenerator.GetInt32(sets.Length)] switch
+            break;
+        default:
+            HashSet<char> missingSets = new(sets);
+            for (uint i = length; i > 0; i--)
+            {
+                string currentSets = missingSets.Count == i ? string.Join("", missingSets) : sets;
+                char set = RandomChar(currentSets);
+                missingSets.Remove(set);
+                builder.Append(RandomChar(set switch
                 {
                     'a' => "abcdefghijklmnopqrstuvwxyz",
                     'A' => "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
@@ -138,8 +145,9 @@ void GenerateAndOutput(uint length, string sets)
                     '.' => "!%()=?+#-.:*@_&",
                     _ => ""
                 }));
-                break;
-        }
+            }
+            break;
+    }
     string result = builder.ToString();
 
     //encode
